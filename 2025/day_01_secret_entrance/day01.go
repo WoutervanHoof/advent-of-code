@@ -52,7 +52,6 @@ func main() {
 			inc2++
 		}
 
-		fmt.Printf("dial : %d, incremented %d\n", dial, inc2)
 		password2 += inc2
 	}
 
