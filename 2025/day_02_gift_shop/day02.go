@@ -63,7 +63,6 @@ func isInvalid(id string) bool {
 		if checkCandidate(id, l) {
 			return true
 		}
-
 	}
 
 	return false
@@ -74,7 +73,6 @@ func checkCandidate(id string, l int) bool {
 		if id[:l] != id[l*i:l*(i+1)] {
 			return false
 		}
-
 	}
 	return true
 }
