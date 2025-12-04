@@ -19,28 +19,27 @@ func main() {
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		line := scanner.Text()
+		text := scanner.Text()
+		line := []byte(text)
 
-		tens := 0
-		ones := 0
-	inner:
-		for i := 0; i < len(line)-1; i++ {
-			digit, _ := strconv.Atoi(line[i : i+1])
+		digits := make([]byte, 12)
+		copy(digits, line[len(line)-12:])
 
-			if tens < digit {
-				tens = digit
-				ones = 0
-				continue inner
+		// from back to front, check digits
+		for i := len(line) - 13; i >= 0; i-- {
+			digit := line[i]
+			j := 0
+			// swap until no longer necessary
+			for j < 12 && digit >= digits[j] {
+				temp := digits[j]
+				digits[j] = digit
+				digit = temp
+				j++
 			}
-
-			ones = max(ones, digit)
 		}
 
-		digit, _ := strconv.Atoi(line[len(line)-1:])
-		ones = max(ones, digit)
-
-		result += tens*10 + ones
-		fmt.Printf("line: %d%d, result: %d\n", tens, ones, result)
+		partial, _ := strconv.Atoi(string(digits))
+		result += partial
 	}
 
 	if err := scanner.Err(); err != nil {
