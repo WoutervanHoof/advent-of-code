@@ -39,7 +39,7 @@ func main() {
 
 		for i := begin; i <= end; i++ {
 			id := strconv.Itoa(i)
-			if id[:len(id)/2] == id[len(id)/2:] {
+			if isInvalid(id) {
 				invalid = append(invalid, id)
 			}
 		}
@@ -52,4 +52,29 @@ func main() {
 	}
 
 	fmt.Printf("Result: %d\n", result)
+}
+
+func isInvalid(id string) bool {
+	for l := len(id) / 2; l >= 1; l-- {
+		if len(id)%l != 0 {
+			continue
+		}
+
+		if checkCandidate(id, l) {
+			return true
+		}
+
+	}
+
+	return false
+}
+
+func checkCandidate(id string, l int) bool {
+	for i := 1; i < len(id)/l; i++ {
+		if id[:l] != id[l*i:l*(i+1)] {
+			return false
+		}
+
+	}
+	return true
 }
