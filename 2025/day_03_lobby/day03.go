@@ -19,8 +19,7 @@ func main() {
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		text := scanner.Text()
-		line := []byte(text)
+		line := scanner.Bytes()
 
 		digits := make([]byte, 12)
 		copy(digits, line[len(line)-12:])
@@ -28,13 +27,12 @@ func main() {
 		// from back to front, check digits
 		for i := len(line) - 13; i >= 0; i-- {
 			digit := line[i]
-			j := 0
+
 			// swap until no longer necessary
-			for j < 12 && digit >= digits[j] {
+			for j := 0; j < 12 && digit >= digits[j]; j++ {
 				temp := digits[j]
 				digits[j] = digit
 				digit = temp
-				j++
 			}
 		}
 
